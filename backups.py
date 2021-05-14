@@ -11,13 +11,15 @@ import json
 
 
 def backup_list(creds, request):
-    print(creds)
     headers = {
              'Authorization': 'Basic ' + creds + ''
     }
 
     r = re.get('https://192.168.31.50:9090/nwrestapi/v2/global/backups', headers=headers, verify=False)
+    #incase of any errors redirect to the default page of the app
     if r.status_code >= 400:
         return redirect("/")
+
+    # Sort the list based on the clieants hostname and savetime of the client
     content = sorted(json.loads(r.content)['backups'], key = lambda i: (i['clientHostname'],  i['creationTime']), reverse=True)
     return render_template('backups.html', content=content)
