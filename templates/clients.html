@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>Clients</h1>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr class="table-dark">
+        <th scope="col">Client Name</th>
+        <th scope="col">Saveset name</th>
+        <th scope="col">Protection Groups</th>
+      </tr>
+    </thead>
+
+    {% for client in content %}
+    <tr>
+      <td>{{client.hostname}}</td>
+      <td>
+        {% for saveset in client.saveSets %}
+        {{saveset}} <br>
+        {% endfor %}
+      </td>
+      <td>
+        {% for group in client.protectionGroups %}
+        {{group}} <br>
+        {% endfor %}
+      </td>
+
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
